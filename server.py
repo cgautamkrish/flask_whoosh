@@ -1,3 +1,6 @@
+# Gautam Krishnan
+# This a purely a hobby project. Hopefully, someone finds this helpful!
+
 from flask import Flask
 from flask import render_template
 from flask import jsonify
@@ -78,7 +81,8 @@ def scrape():
 	path = 'data/'
 	num_files = len([f for f in os.listdir(path)	if os.path.isfile(os.path.join(path, f))])
 
-	contenturl = "http://feeds.reuters.com/reuters/globalmarketsNews"
+	# url for rss feed
+	contenturl = "*******************************"
 	hdr = {'User-Agent' : 'Mozilla/5.0'}
 	req = urllib2.Request(contenturl, headers=hdr)
 	page = urllib2.urlopen(req)
@@ -108,7 +112,7 @@ def scrape():
 	return 'ok'
 
 if __name__ == "__main__":
-	handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
+	handler = RotatingFileHandler('error_log.log', maxBytes=10000, backupCount=1)
 	handler.setLevel(logging.INFO)
 	app.logger.addHandler(handler)
 	run_server()
