@@ -11,7 +11,9 @@ from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
 from whoosh.query import *
 
+import threading
 import datetime
+import time
 import sys
 import os
 import urllib2
@@ -34,11 +36,32 @@ schema = Schema(doc_id=STORED, body=TEXT(stored=True))
 with open('global.txt') as f:
 	global_var = f.read().splitlines()
 
+global_rss_feeds = [
+	'rss1.feed.com',
+	'rss2.feed.com',
+	'rss3.feed.com',
+	]
+
 # before server starts, get data and index 
 def run_server():
 	scrape()
 	index()
 	app.run()
+
+class crawlerThread (threading.Thread):
+	def __init__(self, thread_id, name, status):
+		threading.Thread.__init__(self)
+		self.thread_id = thread_id
+		self.name = name
+		self.status = status
+
+	def run(self):
+		print "Starting thread " + self.name
+		threadLock.acquire()
+		# get a feed url from global_rss_feeds list *assuming the html structure is similar for all
+		# scrape(global_rss_feeds)
+		# queue-like mechanism.. in-progress
+		threadLock.release()
 
 @app.route("/index", methods=['GET'])
 def index():
