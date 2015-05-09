@@ -48,21 +48,6 @@ def run_server():
 	index()
 	app.run()
 
-class crawlerThread (threading.Thread):
-	def __init__(self, thread_id, name, status):
-		threading.Thread.__init__(self)
-		self.thread_id = thread_id
-		self.name = name
-		self.status = status
-
-	def run(self):
-		print "Starting thread " + self.name
-		threadLock.acquire()
-		# get a feed url from global_rss_feeds list *assuming the html structure is similar for all
-		# scrape(global_rss_feeds)
-		# queue-like mechanism.. in-progress
-		threadLock.release()
-
 @app.route("/index", methods=['GET'])
 def index():
 	path = 'data/'
